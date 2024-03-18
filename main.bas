@@ -1,5 +1,7 @@
 #RetroDevStudio.MetaData.BASIC:2049,BASIC V2,uppercase,10,10
-1000 REM --- OTHER GLOBAL VARS. ---
+1000 REM --------------------------
+1001 REM --- OTHER GLOBAL VARS. ---
+1002 REM --------------------------
 1050 DIM DW(11):REM FOR WEEKDAY-BY-DATE
 1100 DIM WD$(6):REM THE WEEKDAYS
 1150 DIM MD(11):REM NON-LEAP MONTH DAYS
@@ -11,22 +13,34 @@
 1400 YE$="":MO$="":DA$="":REM A DATE.
 1450 YE=2024:MO=3:DA=0:REM DATE AS INTS.
 1500 WD=0:REM INDEX INTO WD$.
+1549 REM ------------------------
 1550 REM --- INIT "CONSTANTS" ---
+1551 REM ------------------------
 1600 FOR I=0 TO 11:READ DW(I):NEXT I
 1650 FOR I=0 TO 6:READ WD$(I):NEXT I
 1700 FOR I=0 TO 11:READ MD(I):NEXT I
-1701 REM --- OPEN DISK CMD. CHANNEL ---
-1702 OPEN15,8,15
+1701 REM ------------------------------
+1702 REM --- OPEN DISK CMD. CHANNEL ---
+1703 REM ------------------------------
+1704 OPEN15,8,15
+1749 REM --------------------
 1750 REM --- JUMP TO MAIN ---
+1751 REM --------------------
 1800 GOTO 5050
+1849 REM -------------------
 1850 REM --- SUBROUTINES ---
+1851 REM -------------------
+1899 REM ******************************
 1900 REM *** LEAP YEAR YES/NO TO B2 ***
+1901 REM ******************************
 1950 IF YE/100<>INT(YE/100) GOTO 2100
 2000 IF YE/400=INT(YE/400) GOTO 2150
 2050 B2=0:RETURN:REM NOT A LEAP YEAR
 2100 IF YE/4<>INT(YE/4) GOTO 2050
 2150 B2=1:RETURN:REM IT IS A LEAP YEAR
+2199 REM *******************
 2200 REM *** PRINT MONTH ***
+2201 REM *******************
 2250 REM TITLE ROW (THE WEEKDAYS):
 2300 PRINT " ";
 2350 FOR I=0 TO 5
@@ -59,7 +73,9 @@
 3700 NEXT I
 3750 PRINT""
 3800 RETURN
+3849 REM *****************************
 3850 REM *** FILL WD BY YE,MO & DA ***
+3851 REM *****************************
 3900 B0=YE
 3950 IF MO<3 THEN B0=B0-1
 4000 WD=B0+INT(B0/4)
@@ -69,10 +85,14 @@
 4200 WD=WD-INT(WD/7)*7
 4250 WD=WD+6:WD=WD-INT(WD/7)*7
 4300 RETURN
-4301 REM *** READ DISK ERROR CHANNEL ***
-4302 INPUT#15,B0,B0$,B1,B2
-4303 RETURN
+4301 REM *******************************
+4302 REM *** READ DISK ERROR CHANNEL ***
+4303 REM *******************************
+4304 INPUT#15,B0,B0$,B1,B2
+4305 RETURN
+4349 REM *****************************
 4350 REM *** MONTH FROM INPUT CMD. ***
+4351 REM *****************************
 4400 YE$=MID$(IN$,2,4)
 4450 MO$=MID$(IN$,6,2)
 4500 REM *** MONTH FROM YE$ AND MO$ ***
@@ -94,8 +114,13 @@
 5300 IF CO$<>"Q" THEN 5400
 5350 GOTO5450:REM GOES TO EXIT CODE
 5400 GOTO 5100
+5444 REM >>>>>>>>><<<<<<<<
+5445 REM >>> EXIT CODE <<<
+5446 REM >>>>>>>>><<<<<<<<
 5450 CLOSE15:END
+5499 REM ------------
 5500 REM --- DATA ---
+5501 REM ------------
 5550 REM FOR WEEKDAY-BY-DATE CALC.:
 5600 DATA 0,3,2,5,0,3,5,1,4,6,2,4
 5650 REM FOR WEEKDAY ITERATION:
