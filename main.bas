@@ -2,6 +2,7 @@
 1000 REM --------------------------
 1001 REM --- OTHER GLOBAL VARS. ---
 1002 REM --------------------------
+1004 DN=8:REM DISK DRIVE NUMBER
 1050 DIM DW(11):REM FOR WEEKDAY-BY-DATE
 1100 DIM WD$(6):REM THE WEEKDAYS
 1150 DIM MD(11):REM NON-LEAP MONTH DAYS
@@ -22,7 +23,7 @@
 1701 REM ------------------------------
 1702 REM --- OPEN DISK CMD. CHANNEL ---
 1703 REM ------------------------------
-1704 OPEN15,8,15
+1704 OPEN15,DN,15
 1749 REM --------------------
 1750 REM --- JUMP TO MAIN ---
 1751 REM --------------------
