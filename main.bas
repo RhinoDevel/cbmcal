@@ -38,12 +38,12 @@
 1360 REM -------------------
 1370 REM --- SUBROUTINES ---
 1380 REM -------------------
-1381 REM **********************
-1382 REM *** READ CONF.FILE ***
-1383 REM **********************
+1381 REM **************************
+1382 REM *** TRY READ CONF.FILE ***
+1383 REM **************************
 1384 OPEN 2,DE,2,"@"+DD$+":"+CF$+",S,R"
 1385 GOSUB 2100
-1386 IF B=62 THEN 1416:REM NOT FOUND, OK
+1386 IF B=62 THEN 1416:REM NOT FOUND,OK
 1387 IF B=0 THEN 1390
 1388 PRINT"ERROR: READ CONF.FILE!";B0
 1389 GOTO 1416:REM RETURNS ON ERROR
@@ -117,9 +117,9 @@
 2040 WD=WD-INT(WD/7)*7
 2050 WD=WD+6:WD=WD-INT(WD/7)*7
 2060 RETURN
-2070 REM *******************************
-2080 REM *** READ DISK ERROR CHANNEL ***
-2090 REM *******************************
+2070 REM ******************************
+2080 REM *** READ DISK ERR. CHANNEL ***
+2090 REM ******************************
 2100 INPUT#15,B0,B0$,B1,B2:RETURN
 2110 REM *****************************
 2120 REM *** MONTH FROM INPUT CMD. ***
