@@ -1,8 +1,15 @@
 #RetroDevStudio.MetaData.BASIC:2049,BASIC V2,uppercase,10,10
+1000 REM ---------------------------
+1010 REM --- CONFIG.GLOBAL VARS. ---
+1020 REM ---------------------------
+1030 CF$="CBMCAL-CONF":REM CONFIG.FILE
+1040 DE=8:REM DISK DEVICE NR. (8,9,..)
+1041 DD$="0":REM DISK DRV. NR. (0 OR 1)
+1050 YE=2024:REM YEAR
+1060 MO=3:REM MONTH (1 TO 12)
 2000 REM --------------------------
 2010 REM --- OTHER GLOBAL VARS. ---
 2020 REM --------------------------
-2030 DN=8:REM DISK DRIVE NUMBER
 2040 DIM DW(11):REM FOR WEEKDAY-BY-DATE
 2050 DIM WD$(6):REM THE WEEKDAYS
 2060 DIM MD(11):REM NON-LEAP MONTH DAYS
@@ -12,7 +19,7 @@
 2100 IN$="":REM FOR USER INPUT
 2110 CO$="":REM STORES A USER COMMAND
 2120 YE$="":MO$="":DA$="":REM A DATE.
-2130 YE=2024:MO=3:DA=0:REM DATE AS INTS.
+2130 DA=0:REM DAY
 2140 WD=0:REM INDEX INTO WD$.
 2150 REM ------------------------
 2160 REM --- INIT "CONSTANTS" ---
@@ -23,7 +30,7 @@
 2210 REM ------------------------------
 2220 REM --- OPEN DISK CMD. CHANNEL ---
 2230 REM ------------------------------
-2240 OPEN15,DN,15
+2240 OPEN15,DE,15
 2250 REM --------------------
 2260 REM --- JUMP TO MAIN ---
 2270 REM --------------------
@@ -31,9 +38,22 @@
 2290 REM -------------------
 2300 REM --- SUBROUTINES ---
 2310 REM -------------------
-2320 REM ******************************
-2330 REM *** LEAP YEAR YES/NO TO B2 ***
-2340 REM ******************************
+2311 REM ******************************
+2312 REM *** (OVER-)WRITE CONF.FILE ***
+2313 REM ******************************
+2314 OPEN 2,DE,2,"@"+DD$+":"+CF$+",S,W"
+2316 GOSUB 2900
+2317 IF B0=0 THEN 2320
+2318 PRINT"ERROR: WRITE CONF.FILE!";B0
+2319 GOTO 2330:REM EXITS ON ERROR
+2320 PRINT#2,STR$(DE)
+2321 PRINT#2,DD$
+2322 PRINT#2,STR$(YE)
+2323 PRINT#2,STR$(MO)
+2330 CLOSE2:RETURN
+2347 REM ******************************
+2348 REM *** LEAP YEAR YES/NO TO B2 ***
+2349 REM ******************************
 2350 IF YE/100<>INT(YE/100) GOTO 2380
 2360 IF YE/400=INT(YE/400) GOTO 2390
 2370 B2=0:RETURN:REM NOT A LEAP YEAR
@@ -89,8 +109,7 @@
 2870 REM *******************************
 2880 REM *** READ DISK ERROR CHANNEL ***
 2890 REM *******************************
-2900 INPUT#15,B0,B0$,B1,B2
-2910 RETURN
+2900 INPUT#15,B0,B0$,B1,B2:RETURN
 2920 REM *****************************
 2930 REM *** MONTH FROM INPUT CMD. ***
 2940 REM *****************************
@@ -106,7 +125,7 @@
 3040 RETURN
 3050 REM --------------------
 3060 REM --- MAIN ROUTINE ---
-3070 REM --------------------
+3070 REM -------------------
 3080 PRINT"":GOSUB 3010
 3090 INPUT"";IN$:REM READS COMMANDLINE
 3100 CO$=LEFT$(IN$,1):REM GETS COMMAND
